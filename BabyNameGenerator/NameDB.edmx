@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NameGeneratorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="first_name">
+          <Key>
+            <PropertyRef Name="FirstID" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="FirstID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="full_name">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FirstID" Type="int" Nullable="false" />
+          <Property Name="MiddleID" Type="int" Nullable="false" />
+          <Property Name="Good" Type="bit" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="middle_name">
+          <Key>
+            <PropertyRef Name="MiddleID" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="MiddleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_full_name_first_name">
+          <End Role="first_name" Type="Self.first_name" Multiplicity="1" />
+          <End Role="full_name" Type="Self.full_name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="first_name">
+              <PropertyRef Name="FirstID" />
+            </Principal>
+            <Dependent Role="full_name">
+              <PropertyRef Name="FirstID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_full_name_middle_name">
+          <End Role="middle_name" Type="Self.middle_name" Multiplicity="1" />
+          <End Role="full_name" Type="Self.full_name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="middle_name">
+              <PropertyRef Name="MiddleID" />
+            </Principal>
+            <Dependent Role="full_name">
+              <PropertyRef Name="MiddleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NameGeneratorModelStoreContainer">
+          <EntitySet Name="first_name" EntityType="Self.first_name" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="full_name" EntityType="Self.full_name" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="middle_name" EntityType="Self.middle_name" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_full_name_first_name" Association="Self.FK_full_name_first_name">
+            <End Role="first_name" EntitySet="first_name" />
+            <End Role="full_name" EntitySet="full_name" />
+          </AssociationSet>
+          <AssociationSet Name="FK_full_name_middle_name" Association="Self.FK_full_name_middle_name">
+            <End Role="middle_name" EntitySet="middle_name" />
+            <End Role="full_name" EntitySet="full_name" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NameGeneratorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="first_name">
+          <Key>
+            <PropertyRef Name="FirstID" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="FirstID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="full_name" Relationship="NameGeneratorModel.FK_full_name_first_name" FromRole="first_name" ToRole="full_name" />
+        </EntityType>
+        <EntityType Name="full_name">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FirstID" Type="Int32" Nullable="false" />
+          <Property Name="MiddleID" Type="Int32" Nullable="false" />
+          <Property Name="Good" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="first_name" Relationship="NameGeneratorModel.FK_full_name_first_name" FromRole="full_name" ToRole="first_name" />
+          <NavigationProperty Name="middle_name" Relationship="NameGeneratorModel.FK_full_name_middle_name" FromRole="full_name" ToRole="middle_name" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="middle_name">
+          <Key>
+            <PropertyRef Name="MiddleID" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="MiddleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="full_name" Relationship="NameGeneratorModel.FK_full_name_middle_name" FromRole="middle_name" ToRole="full_name" />
+        </EntityType>
+        <EntityContainer Name="NameGeneratorEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="first_name" EntityType="Self.first_name" />
+          <EntitySet Name="full_name" EntityType="Self.full_name" />
+          <EntitySet Name="middle_name" EntityType="Self.middle_name" />
+          <AssociationSet Name="FK_full_name_first_name" Association="NameGeneratorModel.FK_full_name_first_name">
+            <End Role="first_name" EntitySet="first_name" />
+            <End Role="full_name" EntitySet="full_name" />
+          </AssociationSet>
+          <AssociationSet Name="FK_full_name_middle_name" Association="NameGeneratorModel.FK_full_name_middle_name">
+            <End Role="middle_name" EntitySet="middle_name" />
+            <End Role="full_name" EntitySet="full_name" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_full_name_first_name">
+          <End Type="NameGeneratorModel.first_name" Role="first_name" Multiplicity="1" />
+          <End Type="NameGeneratorModel.full_name" Role="full_name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="first_name">
+              <PropertyRef Name="FirstID" />
+            </Principal>
+            <Dependent Role="full_name">
+              <PropertyRef Name="FirstID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_full_name_middle_name">
+          <End Type="NameGeneratorModel.middle_name" Role="middle_name" Multiplicity="1" />
+          <End Type="NameGeneratorModel.full_name" Role="full_name" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="middle_name">
+              <PropertyRef Name="MiddleID" />
+            </Principal>
+            <Dependent Role="full_name">
+              <PropertyRef Name="MiddleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NameGeneratorModelStoreContainer" CdmEntityContainer="NameGeneratorEntities1">
+          <EntitySetMapping Name="first_name">
+            <EntityTypeMapping TypeName="NameGeneratorModel.first_name">
+              <MappingFragment StoreEntitySet="first_name">
+                <ScalarProperty Name="FirstID" ColumnName="FirstID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="full_name">
+            <EntityTypeMapping TypeName="NameGeneratorModel.full_name">
+              <MappingFragment StoreEntitySet="full_name">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FirstID" ColumnName="FirstID" />
+                <ScalarProperty Name="MiddleID" ColumnName="MiddleID" />
+                <ScalarProperty Name="Good" ColumnName="Good" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="middle_name">
+            <EntityTypeMapping TypeName="NameGeneratorModel.middle_name">
+              <MappingFragment StoreEntitySet="middle_name">
+                <ScalarProperty Name="MiddleID" ColumnName="MiddleID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
