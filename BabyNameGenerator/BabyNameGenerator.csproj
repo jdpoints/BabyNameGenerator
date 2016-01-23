@@ -164,6 +164,11 @@
       <DependentUpon>NameDB.edmx</DependentUpon>
       <LastGenOutput>NameDB.cs</LastGenOutput>
     </Content>
+    <Content Include="SQL Setup\DacMetadata.xml" />
+    <Content Include="SQL Setup\DBCreation.sql" />
+    <Content Include="SQL Setup\model.sql" />
+    <Content Include="SQL Setup\model.xml" />
+    <Content Include="SQL Setup\Origin.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
